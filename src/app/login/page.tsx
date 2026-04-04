@@ -49,13 +49,8 @@ export default function LoginPage() {
       }
 
       toast.success("Welcome back!");
+      router.replace("/dashboard");
 
-      // role-based redirect — refresh first so session cookie is applied
-      const role = (result.data?.user as { role?: string })?.role;
-      router.refresh();
-      if (role === "ADMIN") router.replace("/dashboard/admin");
-      else if (role === "TUTOR") router.replace("/dashboard/tutor");
-      else router.replace("/dashboard/student");
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -70,7 +65,6 @@ export default function LoginPage() {
       </div>
 
       <div className="w-full max-w-md space-y-6">
-        {/* Logo */}
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2 font-bold text-2xl">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white">

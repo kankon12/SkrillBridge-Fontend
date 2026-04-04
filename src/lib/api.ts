@@ -8,7 +8,7 @@ export const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// রেসপন্স ইন্টারসেপ্টর: সেশন শেষ হয়ে গেলে অটো লগইন পেজে পাঠাবে
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -47,7 +47,6 @@ export const tutorsApi = {
     categoryId: string;
   }) => api.put("/tutors/me/profile", data),
 
-  // ব্যাকএন্ডের চাহিদা অনুযায়ী isActive বাদ দিয়ে শুধু slots পাঠানো হচ্ছে
   updateAvailability: (slots: Array<{ dayOfWeek: number; startTime: string; endTime: string }>) => {
     const formattedSlots = slots.map(({ dayOfWeek, startTime, endTime }) => ({
       dayOfWeek,
@@ -62,7 +61,7 @@ export const tutorsApi = {
 };
 
 export const bookingsApi = {
-  // scheduledAt অবশ্যই ISO 8601 ফরম্যাটে হতে হবে (যেমন: "2026-04-02T10:00:00.000Z")
+ 
   create: (data: {
     tutorId: string;
     subject: string;
@@ -75,17 +74,20 @@ export const bookingsApi = {
     api.get("/bookings", { params }),
 
   getById: (id: string) => api.get(`/bookings/${id}`),
-  
-  cancel: (id: string, reason?: string) => 
+
+  cancel: (id: string, reason?: string) =>
     api.patch(`/bookings/${id}/cancel`, { reason }),
-    
-  complete: (id: string) => 
+
+  complete: (id: string) =>
     api.patch(`/bookings/${id}/complete`),
 };
 
 export const reviewsApi = {
   create: (data: { bookingId: string; rating: number; comment?: string }) =>
     api.post("/reviews", data),
+
+  getByTutor: (tutorId: string, params?: { page?: number; limit?: number }) =>
+    api.get(`/reviews/tutor/${tutorId}`, { params }),
 };
 
 export const categoriesApi = {
@@ -106,7 +108,6 @@ export const adminApi = {
 
   verifyTutor: (id: string) => api.patch(`/admin/tutors/${id}/verify`),
 
-  // নাম থেকে স্ল্যাগ (slug) জেনারেট করে ক্যাটাগরি তৈরি
   createCategory: (data: { name: string; description?: string; icon?: string }) => {
     const slug = data.name
       .toLowerCase()
@@ -115,9 +116,8 @@ export const adminApi = {
     return api.post("/admin/categories", { ...data, slug });
   },
 
-  // ক্যাটাগরি আপডেটের সময়ও নাম বদলালে স্ল্যাগ আপডেট হবে
   updateCategory: (id: string, data: { name?: string; description?: string; icon?: string; isActive?: boolean }) => {
-    const payload: Record<string, any> = { ...data };
+    const payload: Record<string, unknown> = { ...data };
     if (data.name) {
       payload.slug = data.name
         .toLowerCase()

@@ -55,6 +55,8 @@ export default function StudentBookingsPage() {
     },
   });
 
+  
+  
   const bookings: Booking[] = data?.data?.data || [];
   const filtered = statusFilter === "ALL" ? bookings : bookings.filter((b) => b.status === statusFilter);
 
@@ -119,7 +121,7 @@ export default function StudentBookingsPage() {
                         {booking.status}
                       </Badge>
                       {booking.review && (
-                        <Badge variant="success" className="text-xs">★ Reviewed</Badge>
+                        <Badge variant="outline" className="text-xs text-yellow-600 border-yellow-400">★ Reviewed</Badge>
                       )}
                     </div>
                     <p className="text-sm text-muted-foreground">Tutor: {booking.tutor?.user?.name}</p>
@@ -170,6 +172,7 @@ export default function StudentBookingsPage() {
                         </a>
                       </Button>
                     )}
+                  
                     {booking.status === "CONFIRMED" && new Date(booking.scheduledAt) > new Date() && (
                       <Button
                         size="sm" variant="outline"

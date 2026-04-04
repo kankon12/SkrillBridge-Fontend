@@ -1,4 +1,4 @@
-// ==================== ENUMS ====================
+
 export type Role = "STUDENT" | "TUTOR" | "ADMIN";
 export type BookingStatus = "CONFIRMED" | "COMPLETED" | "CANCELLED";
 
@@ -32,7 +32,7 @@ export interface Category {
 export interface Availability {
   id: string;
   tutorId: string;
-  dayOfWeek: number; // 0=Sun, 1=Mon, ...6=Sat
+  dayOfWeek: number; 
   startTime: string;
   endTime: string;
   isActive: boolean;
@@ -56,7 +56,7 @@ export interface TutorProfile {
   categoryId: string;
   category: Category;
   availability: Availability[];
-  reviews?: Review[]; // included in getTutorById response
+  reviews?: Review[]; 
   createdAt: string;
   updatedAt: string;
 }
@@ -103,9 +103,17 @@ export interface ApiResponse<T> {
   error?: string;
 }
 
+
 export interface PaginatedResponse<T> {
   success: boolean;
   data: T[];
+  meta?: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+  
   pagination?: {
     total: number;
     page: number;
@@ -114,12 +122,27 @@ export interface PaginatedResponse<T> {
   };
 }
 
-// ==================== ADMIN STATS ====================
+
 export interface AdminStats {
-  totalUsers: number;
-  totalTutors: number;
-  totalStudents: number;
-  totalBookings: number;
-  completedBookings: number;
-  totalRevenue: number;
+  users: {
+    total: number;
+    students: number;
+    tutors: number;
+  };
+  bookings: {
+    total: number;
+    completed: number;
+    cancelled: number;
+    pending: number;
+  };
+  revenue: {
+    total: number;
+  };
+  topTutors: Array<{
+    id: string;
+    user: { name: string; image?: string | null; email: string };
+    category: { name: string };
+    totalSessions: number;
+    avgRating: number;
+  }>;
 }
