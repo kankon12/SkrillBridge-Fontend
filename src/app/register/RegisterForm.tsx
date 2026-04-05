@@ -2,16 +2,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { BookOpen, Eye, EyeOff, Loader2, GraduationCap, BookMarked } from "lucide-react";
+import {
+  BookOpen,
+  Eye,
+  EyeOff,
+  Loader2,
+  GraduationCap,
+  BookMarked,
+} from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { signUp } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
@@ -26,9 +39,9 @@ const registerSchema = z.object({
 type RegisterForm = z.infer<typeof registerSchema>;
 
 export default function RegisterForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const defaultRole = (searchParams.get("role") as "STUDENT" | "TUTOR") || "STUDENT";
+  const defaultRole =
+    (searchParams.get("role") as "STUDENT" | "TUTOR") || "STUDENT";
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +75,9 @@ export default function RegisterForm() {
       }
 
       toast.success("Account created! Welcome to SkillBridge 🎉");
-      router.replace("/dashboard");
+      // cookie set হওয়ার জন্য wait করে hard redirect
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      window.location.replace("/dashboard");
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -82,15 +97,21 @@ export default function RegisterForm() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white">
               <BookOpen className="h-5 w-5" />
             </div>
-            <span>Skill<span className="text-indigo-600">Bridge</span></span>
+            <span>
+              Skill<span className="text-indigo-600">Bridge</span>
+            </span>
           </div>
-          <p className="text-sm text-muted-foreground">Create your free account</p>
+          <p className="text-sm text-muted-foreground">
+            Create your free account
+          </p>
         </div>
 
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl">Get started</CardTitle>
-            <CardDescription>Choose your role and create an account</CardDescription>
+            <CardDescription>
+              Choose your role and create an account
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -110,11 +131,32 @@ export default function RegisterForm() {
                       )}
                     >
                       {role === "STUDENT" ? (
-                        <GraduationCap className={cn("h-6 w-6", selectedRole === role ? "text-indigo-600" : "text-muted-foreground")} />
+                        <GraduationCap
+                          className={cn(
+                            "h-6 w-6",
+                            selectedRole === role
+                              ? "text-indigo-600"
+                              : "text-muted-foreground"
+                          )}
+                        />
                       ) : (
-                        <BookMarked className={cn("h-6 w-6", selectedRole === role ? "text-indigo-600" : "text-muted-foreground")} />
+                        <BookMarked
+                          className={cn(
+                            "h-6 w-6",
+                            selectedRole === role
+                              ? "text-indigo-600"
+                              : "text-muted-foreground"
+                          )}
+                        />
                       )}
-                      <span className={cn("text-sm font-medium", selectedRole === role ? "text-indigo-600" : "text-muted-foreground")}>
+                      <span
+                        className={cn(
+                          "text-sm font-medium",
+                          selectedRole === role
+                            ? "text-indigo-600"
+                            : "text-muted-foreground"
+                        )}
+                      >
                         {role === "STUDENT" ? "Student" : "Tutor"}
                       </span>
                     </button>
@@ -125,14 +167,33 @@ export default function RegisterForm() {
 
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" placeholder="John Doe" {...register("name")} disabled={isLoading} />
-                {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
+                <Input
+                  id="name"
+                  placeholder="John Doe"
+                  {...register("name")}
+                  disabled={isLoading}
+                />
+                {errors.name && (
+                  <p className="text-xs text-destructive">
+                    {errors.name.message}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="you@example.com" {...register("email")} disabled={isLoading} />
-                {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  {...register("email")}
+                  disabled={isLoading}
+                />
+                {errors.email && (
+                  <p className="text-xs text-destructive">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -151,15 +212,31 @@ export default function RegisterForm() {
                     className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
-                {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
+                {errors.password && (
+                  <p className="text-xs text-destructive">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
 
-              <Button variant="brand" className="w-full" type="submit" disabled={isLoading}>
+              <Button
+                variant="brand"
+                className="w-full"
+                type="submit"
+                disabled={isLoading}
+              >
                 {isLoading ? (
-                  <><Loader2 className="h-4 w-4 animate-spin" /> Creating account...</>
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Creating
+                    account...
+                  </>
                 ) : (
                   "Create account"
                 )}
@@ -168,7 +245,12 @@ export default function RegisterForm() {
 
             <div className="mt-4 text-center text-sm text-muted-foreground">
               Already have an account?{" "}
-              <Link href="/login" className="text-indigo-600 hover:underline font-medium">Sign in</Link>
+              <Link
+                href="/login"
+                className="text-indigo-600 hover:underline font-medium"
+              >
+                Sign in
+              </Link>
             </div>
           </CardContent>
         </Card>

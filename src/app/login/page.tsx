@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,7 +10,13 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { signIn } from "@/lib/auth-client";
 
@@ -23,7 +28,6 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,8 +53,9 @@ export default function LoginPage() {
       }
 
       toast.success("Welcome back!");
-      router.replace("/dashboard");
-
+      // cookie set হওয়ার জন্য wait করে hard redirect
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      window.location.replace("/dashboard");
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -70,7 +75,9 @@ export default function LoginPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white">
               <BookOpen className="h-5 w-5" />
             </div>
-            <span>Skill<span className="text-indigo-600">Bridge</span></span>
+            <span>
+              Skill<span className="text-indigo-600">Bridge</span>
+            </span>
           </div>
           <p className="text-sm text-muted-foreground">Connect. Learn. Grow.</p>
         </div>
@@ -78,7 +85,9 @@ export default function LoginPage() {
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl">Sign in</CardTitle>
-            <CardDescription>Enter your credentials to access your account</CardDescription>
+            <CardDescription>
+              Enter your credentials to access your account
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -92,7 +101,9 @@ export default function LoginPage() {
                   disabled={isLoading}
                 />
                 {errors.email && (
-                  <p className="text-xs text-destructive">{errors.email.message}</p>
+                  <p className="text-xs text-destructive">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
@@ -112,15 +123,26 @@ export default function LoginPage() {
                     className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="text-xs text-destructive">{errors.password.message}</p>
+                  <p className="text-xs text-destructive">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
-              <Button variant="brand" className="w-full" type="submit" disabled={isLoading}>
+              <Button
+                variant="brand"
+                className="w-full"
+                type="submit"
+                disabled={isLoading}
+              >
                 {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -134,7 +156,10 @@ export default function LoginPage() {
 
             <div className="mt-4 text-center text-sm text-muted-foreground">
               Don&apos;t have an account?{" "}
-              <Link href="/register" className="text-indigo-600 hover:underline font-medium">
+              <Link
+                href="/register"
+                className="text-indigo-600 hover:underline font-medium"
+              >
                 Create one
               </Link>
             </div>

@@ -7,23 +7,26 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const allCookies = request.cookies.getAll();
 
-  console.log("ALL COOKIES:", allCookies.map(c => c.name)); // ← debug করার জন্য
-
   const sessionCookie = allCookies.find(
     (c) =>
+      c.name === "__Secure-skillbridge.session_token" ||
+      c.name === "skillbridge.session_token" ||
       c.name.startsWith("skillbridge.") ||
+      c.name.startsWith("__Secure-skillbridge.") ||
       c.name.startsWith("better-auth.") ||
-      c.name.startsWith("__Secure-skillbridge")
+      c.name.startsWith("__Secure-better-auth.")
   );
 
   const isAuthenticated = !!sessionCookie;
 
+  // Protected route + not logged in → login এ পাঠাও
   if (protectedRoutes.some((r) => pathname.startsWith(r)) && !isAuthenticated) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("from", pathname);
     return NextResponse.redirect(loginUrl);
   }
 
+  // Already logged in + login/register page → dashboard এ পাঠাও
   if (authRoutes.includes(pathname) && isAuthenticated) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }

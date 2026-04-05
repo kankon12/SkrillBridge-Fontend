@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
 import type { SessionUser } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
 
 export default function DashboardPage() {
-  const router = useRouter();
   const { data: session, isPending } = useSession();
   const redirected = useRef(false);
 
@@ -15,29 +13,34 @@ export default function DashboardPage() {
     if (isPending) return;
     if (redirected.current) return;
 
-    if (session) {
+    if (session?.user) {
       redirected.current = true;
       const role = (session.user as SessionUser)?.role;
-      if (role === "ADMIN") router.replace("/dashboard/admin");
-      else if (role === "TUTOR") router.replace("/dashboard/tutor");
-      else router.replace("/dashboard/student");
+      if (role === "ADMIN") window.location.replace("/dashboard/admin");
+      else if (role === "TUTOR") window.location.replace("/dashboard/tutor");
+      else window.location.replace("/dashboard/student");
       return;
     }
 
-    // session null হলে একটু wait করো — cookie এখনো set হচ্ছে হয়তো
+    // session নেই — একটু wait করে login এ পাঠাও
     const timer = setTimeout(() => {
       if (!redirected.current) {
         redirected.current = true;
-        router.replace("/login");
+        window.location.replace("/login");
       }
-    }, 2000);
+    }, 1500);
 
     return () => clearTimeout(timer);
-  }, [session, isPending, router]);
+  }, [session, isPending]);
 
   return (
-    <div className="flex items-center justify-center h-64">
-      <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center gap-3">
+        <Loader2 className="h-10 w-10 animate-spin text-indigo-600" />
+        <p className="text-sm text-muted-foreground">
+          Loading your dashboard...
+        </p>
+      </div>
     </div>
   );
 }
