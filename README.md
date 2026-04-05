@@ -4,6 +4,18 @@
 
 ---
 
+## 🔗 লাইভ লিংকসমূহ
+
+| রিসোর্স | লিংক |
+|---|---|
+| 🎬 ডেমো ভিডিও | [Loom-এ দেখুন](https://www.loom.com/share/c41bc7f3e9244eb185fb7cced385debc) |
+| 🌐 ফ্রন্টএন্ড লাইভ | [skillbridge-frontend-rho-nine.vercel.app](https://skillbridge-frontend-rho-nine.vercel.app) |
+| 🖥️ ব্যাকএন্ড লাইভ | [skrill-bridge-backend.vercel.app](https://skrill-bridge-backend.vercel.app) |
+| 💻 ফ্রন্টএন্ড রিপো | [SkrillBridge-Fontend](https://github.com/kankon12/SkrillBridge-Fontend) |
+| ⚙️ ব্যাকএন্ড রিপো | [SkillBridge-Backend](https://github.com/kankon12/SkillBridge-Backend) |
+
+---
+
 ## 🛠 টেক স্ট্যাক
 
 | টুল | ভার্সন |
@@ -52,7 +64,7 @@ src/
 │   ├── api.ts                          # Axios instance
 │   ├── auth-client.ts                  # Better Auth client config
 │   └── utils.ts                        # Helper utilities
-├── middleware.ts                        # Route protection
+├── middleware.ts                       # Route protection
 └── types/
     └── index.ts                        # Global TypeScript types
 ```
@@ -64,8 +76,8 @@ src/
 ### ১. রিপোজিটরি ক্লোন করুন
 
 ```bash
-git clone https://github.com/your-username/skillbridge-frontend.git
-cd skillbridge-frontend
+git clone https://github.com/kankon12/SkrillBridge-Fontend.git
+cd SkrillBridge-Fontend
 ```
 
 ### ২. ডিপেন্ডেন্সি ইনস্টল করুন
@@ -124,7 +136,10 @@ npm run lint     # ESLint চালান
 
 ## 🌐 ব্যাকএন্ড
 
-এই ফ্রন্টএন্ড SkillBridge ব্যাকএন্ড API-এর সাথে কাজ করে। ব্যাকএন্ড রিপোজিটরি: [skillbridge-backend](https://github.com/your-username/skillbridge-backend)
+এই ফ্রন্টএন্ড SkillBridge ব্যাকএন্ড API-এর সাথে কাজ করে।
+
+- **ব্যাকএন্ড রিপো:** [SkillBridge-Backend](https://github.com/kankon12/SkillBridge-Backend)
+- **ব্যাকএন্ড লাইভ URL:** [skrill-bridge-backend.vercel.app](https://skrill-bridge-backend.vercel.app)
 
 ---
 
