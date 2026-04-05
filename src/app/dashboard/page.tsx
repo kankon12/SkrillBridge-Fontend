@@ -22,7 +22,7 @@ export default function DashboardPage() {
       return;
     }
 
-    // session নেই — একটু wait করে login এ পাঠাও
+   
     const timer = setTimeout(() => {
       if (!redirected.current) {
         redirected.current = true;

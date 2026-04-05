@@ -1,15 +1,12 @@
 import { createAuthClient } from "better-auth/react";
 import { inferAdditionalFields } from "better-auth/client/plugins";
 
-// Better Auth frontend client
-// baseURL = backend root (NOT /api) — auth routes: /api/auth/*
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000",
+  baseURL: typeof window !== "undefined" ? window.location.origin : "",
   fetchOptions: {
-    credentials: "include", // cookies cross-origin
+    credentials: "include",
   },
   plugins: [
-    // This makes useSession() return role & isBanned from additionalFields
     inferAdditionalFields({
       user: {
         role: {
@@ -33,7 +30,6 @@ export const {
   getSession,
 } = authClient;
 
-// Type helper — session user with role
 export type SessionUser = typeof authClient.$Infer.Session.user & {
   role: "STUDENT" | "TUTOR" | "ADMIN";
   isBanned: boolean;
