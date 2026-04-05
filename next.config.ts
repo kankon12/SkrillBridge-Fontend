@@ -9,8 +9,8 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: "/api/auth/:path*",
-        destination: "https://skrill-bridge-backend.vercel.app/api/auth/:path*",
+        source: "/api/:path*",
+        destination: "https://skrill-bridge-backend.vercel.app/api/:path*",
       },
     ];
   },
