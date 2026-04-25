@@ -8,7 +8,7 @@
 
 | রিসোর্স | লিংক |
 |---|---|
-| 🎬 ডেমো ভিডিও | [Loom-এ দেখুন](https://www.loom.com/share/c41bc7f3e9244eb185fb7cced385debc) |
+| 🎬 ডেমো ভিডিও | [Loom-এ দেখুন](https://www.loom.com/share/ad7057b87c8d46a2a101f4a8f4a62d81) |
 | 🌐 ফ্রন্টএন্ড লাইভ | [skillbridge-frontend-rho-nine.vercel.app](https://skillbridge-frontend-rho-nine.vercel.app) |
 | 🖥️ ব্যাকএন্ড লাইভ | [skrill-bridge-backend.vercel.app](https://skrill-bridge-backend.vercel.app) |
 | 💻 ফ্রন্টএন্ড রিপো | [SkrillBridge-Fontend](https://github.com/kankon12/SkrillBridge-Fontend) |
